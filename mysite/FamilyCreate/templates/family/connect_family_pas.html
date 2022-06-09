@@ -1,0 +1,17 @@
+{% extends 'family/base.html' %}
+{% block title %}
+
+{% endblock%}
+
+{% block body %}
+<a href = "/">Назад</a>
+<form method = "POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type ="submit" value = "Отправить">
+</form>
+{% if my_room_exist == False %}
+<h2>Комната не найдена</h2>
+{% endif %}
+
+{% endblock %}

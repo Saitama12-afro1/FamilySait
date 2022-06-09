@@ -1,0 +1,14 @@
+{% extends 'family/base.html' %}
+{% block title %}
+
+{% endblock%}
+
+{% block body %}
+<a href = "/">Назад</a>
+{{a}}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type ="submit" value = "Отправить">
+</form>
+{% endblock  %}

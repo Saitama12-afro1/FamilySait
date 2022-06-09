@@ -1,0 +1,36 @@
+{% extends 'family/base.html' %}
+{% block title %}
+
+{% endblock%}
+
+{% block body %}
+{% if  user.is_active%}
+    <h2>Добро пожаловать {{user.first_name}}</h2>
+    <a href = "{% url 'family:createFamily' %}">Создать комнату</a>
+    <br>
+        <form method = "POST">
+            {% csrf_token %}
+            <input type = "submit" value = "Подключиться к комнате" name = "form_connect"></input>
+            <select name = "connect">
+                <option value = "1">По ключу</option>
+                <option value = "2">По паролю</option>
+            </select>
+        </form>
+    </br>
+    <br>
+    <form method = "POST">
+        {% csrf_token %}
+
+        <input type ="submit" value = "Выйти" name="ExitBut">
+    </form>
+    </br>
+{% for el in  rooms_current_user %}
+    <br><a href="{% url 'family:room' el.id%}" value='Connect'> {{el}}</a></br>
+{% endfor %}
+{% else %}
+
+<a href = "{% url 'family:register'%}">Регистрация</a>
+<a href = "{% url 'family:login'%}">Войти</a>
+
+{% endif %}
+{% endblock%}
