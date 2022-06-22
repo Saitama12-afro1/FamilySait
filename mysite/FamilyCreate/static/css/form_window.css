@@ -1,0 +1,10 @@
+.form_window{
+  position: absolute;
+    margin-left: 100px;
+    margin-top: -60px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: 2px 2px 2px grey;
+    background-color: rgb(200, 200, 200);
+}
+

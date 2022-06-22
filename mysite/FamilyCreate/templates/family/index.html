@@ -24,7 +24,7 @@
         <input type ="submit" value = "Выйти" name="ExitBut">
     </form>
     </br>
-{% for el in  rooms_current_user %}
+{% for el in  rooms %}
     <br><a href="{% url 'family:room' el.id%}" value='Connect'> {{el}}</a></br>
 {% endfor %}
 {% else %}

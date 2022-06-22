@@ -1,8 +1,8 @@
 from attr import fields
 from django import forms
-from django.contrib.auth import User
 
-from .models import My_Users, Task, My_Room
+
+from .models import My_Users, Task, My_Room, Type_Task
 
 class RegisterUser(forms.ModelForm):
     password = forms.CharField(label = "password", widget=forms.PasswordInput)
@@ -42,3 +42,17 @@ class RoomForm(forms.ModelForm):
 class ConPasForm(forms.Form):
     name_room = forms.CharField(label="name_room", max_length=100)
     password = forms.CharField(label="password", max_length=100,  widget=forms.PasswordInput)
+    
+class TaskForm(forms.ModelForm):
+    task_type = Type_Task.objects.all()
+    
+    CHOICES = []
+    for i in task_type:
+        CHOICES.append((i.my_type,f'{i.my_type}'))
+    class Meta:
+        model = Task
+        fields = ("task_title", "task_description")
+    type_task = forms.ModelChoiceField(required=False, queryset= Type_Task.objects.all(),
+                                               )
+        
+        

@@ -1,11 +1,57 @@
+
 {% extends 'family/base.html' %}
+{% load static %}
+{% block script %}
+<link rel="stylesheet" href="{% static 'css/form_window.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<script src="{% static 'js/app.js' %}"></script>  
+{% endblock %}
 {% block title %}
+
 
 {% endblock%}
 
 {% block body %}
-<a href = "/">Назад</a>
-<br>
-{{room.name_room}}
-</br>
+<div class = "divv">
+    <a href = "/">Назад</a>
+    <br class = "divv">
+    {{room.name_room}}
+    </br>
+    <br>
+    <button  onClick = "window_form()" >Создать задание</button>
+    <div class= "form_window" id = "form_task" hidden >
+    <form method = "POST" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type ="submit" value = "Создать" name = "form1">
+        <button onClick= "window_form()">Закрыть</button>
+    </form>
+    </div>
+    </br>
+    <div class = "task">
+        {% for task in  task_all %}
+            {%if task.active %}
+            <button onClick = "taskDescription({{task.id}})">{{task.task_title}} </button><br>
+            
+            <div class = "take_task" hidden id = "task_description{{task.id}}" >
+                <form method = "POST">
+                    {% csrf_token %}
+                    <textarea class = "take_task"  name = "form2"readonly >{{task.task_description}}</textarea><br>
+                    {{task.type_task}}
+                    <input type ="submit" value = "Взять задание" name = "{{task.id}}"></input>
+                    <input value = "{{task.id}}" name= "id_task" hidden > </input>
+                </form>
+            </div>
+            {%endif %}
+        {% endfor %}
+    </div>
+    <div class = "roomchan">
+        <br>
+            Список roomчан
+        </br>
+        {% for user in name_users_in_room %}
+            <li> {{user.username}}</li>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
