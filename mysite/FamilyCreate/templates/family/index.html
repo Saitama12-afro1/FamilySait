@@ -1,4 +1,10 @@
 {% extends 'family/base.html' %}
+{% load static %}
+{% block script %}
+<link rel="stylesheet" href="{% static 'css/form_window.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<script src="{% static 'js/app.js' %}"></script>  
+{% endblock %}
 {% block title %}
 
 {% endblock%}
@@ -18,7 +24,7 @@
         </form>
     </br>
     <br>
-    <form method = "POST">
+    <form class = "exit" method = "POST">
         {% csrf_token %}
 
         <input type ="submit" value = "Выйти" name="ExitBut">
@@ -27,8 +33,15 @@
 {% for el in  rooms %}
     <br><a href="{% url 'family:room' el.id%}" value='Connect'> {{el}}</a></br>
 {% endfor %}
+<div class = "task">
+    {% for taken_task in taken_task %} 
+    <button onClick = "taskDescription({{taken_task.id}})">{{taken_task.task_title}} </button><br>
+        <div class = "take_task" hidden id = "task_description{{taken_task.id}}">
+        {{taken_task.task_description}} <br>
+        </div>
+    {% endfor %}
+</div>
 {% else %}
-
 <a href = "{% url 'family:register'%}">Регистрация</a>
 <a href = "{% url 'family:login'%}">Войти</a>
 

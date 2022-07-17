@@ -17,6 +17,10 @@ def index(request):
     rooms_current_user_1 = Users_Room.objects.filter(id_user_id = user.id)
     rooms = []
     taken_task = Taken_User_Task.objects.filter(user_id = user.id)
+    info_task = []
+    for j in taken_task:
+        task = Task.objects.get(id = j.task_id)
+        info_task.append(task)
     for i in rooms_current_user_1:
         rooms.append(My_Room.objects.get(id = i.id_room_id))
     if request.method == 'POST':
@@ -29,7 +33,7 @@ def index(request):
                     return HttpResponseRedirect('/connect_family_key')
                 elif request.POST[i] == "2":
                     return HttpResponseRedirect('/connect_family_pas')
-    return render(request, "family/index.html",{"user": user,"rooms":rooms, "taken_task": taken_task} )
+    return render(request, "family/index.html",{"user": user,"rooms":rooms, "taken_task": info_task} )
 
 
 
